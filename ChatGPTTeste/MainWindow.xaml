@@ -1,0 +1,97 @@
+﻿<Window x:Class="ChatGPTTeste.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="ChatGPT API Teste" Height="600" Width="800"
+        Background="#f0f2f5" WindowStartupLocation="CenterScreen" MinHeight="400" MinWidth="600">
+    <Grid Margin="20">
+        <!-- Definição das linhas com proporções -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*" />
+            <!-- 30% para o Prompt -->
+            <RowDefinition Height="3*" />
+            <!-- 70% para o Resultado -->
+            <RowDefinition Height="Auto" />
+            <!-- Para os Botões -->
+        </Grid.RowDefinitions>
+       
+        <!-- Seção do Resultado -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Label do Resultado -->
+            <TextBlock Text="Resposta:" FontSize="14" FontWeight="Bold" Foreground="#333" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+            <!-- TextBox do Resposta -->
+            <TextBox Name="txtResultado" Grid.Row="1" Grid.Column="0"
+                     TextWrapping="Wrap" IsReadOnly="True"
+                     FontSize="{Binding FonteResultado, RelativeSource={RelativeSource AncestorType=Window}}"
+                     Padding="10" Background="WhiteSmoke" BorderBrush="#ccc" BorderThickness="1"
+                     AcceptsReturn="True" IsReadOnlyCaretVisible="True"
+                     VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+            <!-- Controles de Fonte e Copiar -->
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,0" VerticalAlignment="Top">
+                <!-- Botão Aumentar Fonte -->
+                <Button Name="btnAumentarFonte" Width="30" Height="30" Click="BtnAumentarFonte_Click"
+                        Background="#4CAF50" Foreground="White" FontSize="16" ToolTip="Aumentar Fonte">
+                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+
+                <!-- Botão Diminuir Fonte -->
+                <Button Name="btnDiminuirFonte" Width="30" Height="30" Margin="0,10,0,0" Click="BtnDiminuirFonte_Click"
+                        Background="#e74c3c" Foreground="White" FontSize="16" ToolTip="Diminuir Fonte">
+                    <TextBlock Text="-" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+
+                <!-- Botão Copiar Resposta -->
+                <Button Name="btnCopiar" Width="30" Height="30" Margin="0,10,0,0" Click="BtnCopiar_Click"
+                        Background="#2196F3" Foreground="White" FontSize="16" ToolTip="Copiar Reposta">
+                    <TextBlock Text="⧉" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Seção do Prompt -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Label do Prompt -->
+            <TextBlock Text="Prompt:" FontSize="14" FontWeight="Bold" Foreground="#333" Grid.Row="0"/>
+
+            <!-- TextBox do Prompt -->
+            <TextBox Name="txtPrompt" Grid.Row="1"
+              TextWrapping="Wrap" AcceptsReturn="True"
+              FontSize="12" Padding="10" Background="White" BorderBrush="#ccc" BorderThickness="1"
+              VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"
+              ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        </Grid>
+
+
+        <!-- Seção dos Botões -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button x:Name="btnOk" Content="Enviar" Width="100" Height="40" Margin="0,0,10,0"
+                    Background="#4CAF50" Foreground="White" FontWeight="Bold" Click="BtnOk_Click"/>
+            <Button x:Name="btnLimpar" Content="Limpar" Width="100" Height="40" Margin="0,0,10,0"
+                    Background="#f1c40f" Foreground="White" FontWeight="Bold" Click="BtnLimpar_Click"/>
+            <Button x:Name="btnSair" Content="Sair" Width="100" Height="40"
+                    Background="#e74c3c" Foreground="White" FontWeight="Bold" Click="BtnSair_Click"/>
+        </StackPanel>
+
+        <!-- ProgressRing -->
+        <Controls:ProgressRing Name="progressRing" Grid.RowSpan="3" Width="80" Height="80"
+                               IsActive="False" Visibility="Collapsed" Foreground="#4CAF50"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Window>
