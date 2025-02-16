@@ -36,14 +36,14 @@ Este aplicativo permite que você envie prompts para a API do ChatGPT e receba r
 ## Tecnologias Utilizadas
 
 - **C# com WPF**: Para a construção da interface gráfica e lógica de aplicação.
-- **.NET 6.0**: Plataforma de desenvolvimento utilizada.
+- **.NET 8.0**: Plataforma de desenvolvimento utilizada.
 - **MahApps.Metro**: Biblioteca para aprimorar a interface WPF com um design moderno.
 - **Newtonsoft.Json**: Para manipulação de dados JSON.
 - **System.Net.Http**: Para realizar requisições HTTP para a API do OpenAI.
 
 ## Pré-requisitos
 
-- **.NET 6.0 SDK**: Certifique-se de ter o SDK instalado em sua máquina.
+- **.NET 8.0 SDK**: Certifique-se de ter o SDK instalado em sua máquina.
 - **Chave de API do OpenAI**: Necessária para acessar a API do ChatGPT.
 
 ## Configuração
@@ -98,7 +98,7 @@ Este aplicativo permite que você envie prompts para a API do ChatGPT e receba r
 
 1. **Executar o Aplicativo**:
 
-   - Inicie o aplicativo através do Visual Studio ou executando o arquivo executável gerado na pasta `bin/Debug`.
+   - Inicie o aplicativo através do Visual Studio ou executando o arquivo executável gerado na pasta `bin/Debug/net8.0-windows`.
 
 2. **Inserir um Prompt**:
 
