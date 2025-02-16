@@ -1,0 +1,55 @@
+﻿<Window x:Class="ChatGPTTeste.ConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatGPTTeste"
+        mc:Ignorable="d"
+      Title="Configurações" Height="485" Width="300"
+        WindowStartupLocation="CenterOwner" Background="#f0f2f5" ResizeMode="NoResize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título -->
+        <TextBlock Text="Configurações do Aplicativo" FontSize="16" FontWeight="Bold" Foreground="#333" />
+
+        <!-- Conteúdo -->
+        <StackPanel Grid.Row="1" Margin="0,20,0,0">
+           
+
+            <!-- Chave da API -->
+            <TextBlock Text="Chave Secreta OpenAI API:" FontSize="14" FontWeight="Bold" Foreground="#333" Margin="0,20,0,5"/>
+            <PasswordBox x:Name="txtApiKey" />
+
+            <!-- Usar Proxy -->
+            <CheckBox x:Name="chkUsarProxy" Content="Usar Proxy" Margin="0,20,0,5"/>
+
+            <!-- Configurações do Proxy -->
+            <StackPanel x:Name="stackProxy" Visibility="Collapsed">
+                <TextBlock Text="Endereço do Proxy:" FontSize="14" Foreground="#333" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtProxyAddress" />
+
+                <TextBlock Text="Usuário do Proxy:" FontSize="14" Foreground="#333" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtProxyUser" />
+
+                <TextBlock Text="Senha do Proxy:" FontSize="14" Foreground="#333" Margin="0,10,0,5"/>
+                <PasswordBox x:Name="txtProxyPassword" />
+
+                <TextBlock Text="Domínio do Proxy:" FontSize="14" Foreground="#333" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtProxyDomain" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Botões -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button x:Name="btnSalvar" Content="Salvar" Width="100" Margin="0,0,10,0"
+                    Background="#4CAF50" Foreground="White" FontWeight="Bold" Click="BtnSalvar_Click"/>
+            <Button x:Name="btnCancelar" Content="Cancelar" Width="100"
+                    Background="#e74c3c" Foreground="White" FontWeight="Bold" Click="BtnCancelar_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

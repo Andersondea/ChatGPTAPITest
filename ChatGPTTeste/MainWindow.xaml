@@ -1,8 +1,8 @@
-﻿<Window x:Class="ChatGPTTeste.MainWindow"
+﻿<Controls:MetroWindow x:Class="ChatGPTTeste.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="ChatGPT API Teste" Height="600" Width="800"
+        Title="ChatGPT OpenAI API Teste" Height="600" Width="970"
         Background="#f0f2f5" WindowStartupLocation="CenterScreen" MinHeight="400" MinWidth="600">
     <Grid Margin="20">
         <!-- Definição das linhas com proporções -->
@@ -85,6 +85,8 @@
                     Background="#4CAF50" Foreground="White" FontWeight="Bold" Click="BtnOk_Click"/>
             <Button x:Name="btnLimpar" Content="Limpar" Width="100" Height="40" Margin="0,0,10,0"
                     Background="#f1c40f" Foreground="White" FontWeight="Bold" Click="BtnLimpar_Click"/>
+            <Button x:Name="btnConfiguracoes" Content="Configurações" Width="120" Height="40" Margin="0,0,10,0"
+                    Background="#2196F3" Foreground="White" FontWeight="Bold" Click="BtnConfiguracoes_Click"/>
             <Button x:Name="btnSair" Content="Sair" Width="100" Height="40"
                     Background="#e74c3c" Foreground="White" FontWeight="Bold" Click="BtnSair_Click"/>
         </StackPanel>
@@ -94,4 +96,4 @@
                                IsActive="False" Visibility="Collapsed" Foreground="#4CAF50"
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
-</Window>
+</Controls:MetroWindow>

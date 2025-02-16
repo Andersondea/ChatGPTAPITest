@@ -1,19 +1,13 @@
-﻿//#define USE_PROXY
-
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro;
+using MahApps.Metro.Theming;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace ChatGPTTeste
 {
@@ -22,9 +16,17 @@ namespace ChatGPTTeste
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
-        private static readonly string apiKey = "secret_key";  // Substitua com sua chave da OpenAI API
+        private static IConfiguration Configuration { get; set; }
+
+        private static string? apiKey;
+        private static string? useProxy;
+        private static string? proxyAddress;
+        private static string? proxyUser;
+        private static string? proxyPassword;
+        private static string? proxyDomain;
+
         private static readonly string apiUrl = "https://api.openai.com/v1/chat/completions";
         private static readonly int maxRetryCount = 5;  // Número máximo de retentativas
 
@@ -37,8 +39,28 @@ namespace ChatGPTTeste
         public MainWindow()
         {
             InitializeComponent();
+            ConfigurarSegredosUsuario();
+            AtualizarConfiguracoes();
             AtualizarEstadoBotoesFonte();
         }
+
+        private void ConfigurarSegredosUsuario()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            Configuration = builder.Build();
+
+            apiKey = Configuration["OpenAI:ApiKey"];
+            useProxy = Configuration["Proxy:UseProxy"];
+            proxyAddress = Configuration["Proxy:Address"];
+            proxyUser = Configuration["Proxy:User"];
+            proxyPassword = Configuration["Proxy:Password"];
+            proxyDomain = Configuration["Proxy:Domain"];
+        }
+
+
 
         // Evento do botão Ok adaptado
         private async void BtnOk_Click(object sender, RoutedEventArgs e)
@@ -80,20 +102,25 @@ namespace ChatGPTTeste
         // Função para fazer a chamada à API do ChatGPT com política de retentativa
         private static async Task<string> GetChatGptResponse(string prompt)
         {
-#if USE_PROXY
-            var proxy = new WebProxy("HTTP_PROXY", true)
-            {
-                Credentials = new NetworkCredential("USER", "PASSWORD", "DOMAIN")
-            };
+            HttpClientHandler httpClientHandler;
 
-            var httpClientHandler = new HttpClientHandler
+            if (bool.TryParse(useProxy, out bool useProxyFlag) && useProxyFlag)
             {
-                Proxy = proxy,
-                UseProxy = true
-            };
-#else
-            var httpClientHandler = new HttpClientHandler();
-#endif
+                var proxy = new WebProxy(proxyAddress, true)
+                {
+                    Credentials = new NetworkCredential(proxyUser, proxyPassword, proxyDomain)
+                };
+
+                httpClientHandler = new HttpClientHandler
+                {
+                    Proxy = proxy,
+                    UseProxy = true
+                };
+            }
+            else
+            {
+                httpClientHandler = new HttpClientHandler();
+            }
 
             using (HttpClient client = new HttpClient(httpClientHandler))
             {
@@ -104,9 +131,9 @@ namespace ChatGPTTeste
                     model = "gpt-3.5-turbo",
                     messages = new[]
                     {
-                        new { role = "system", content = "Você é um assistente útil." },
-                        new { role = "user", content = prompt }
-                    }
+                new { role = "system", content = "Você é um assistente útil." },
+                new { role = "user", content = prompt }
+            }
                 };
 
                 var jsonBody = JsonConvert.SerializeObject(requestBody);
@@ -207,6 +234,13 @@ namespace ChatGPTTeste
             }
         }
 
+        private void BtnConfiguracoes_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigWindow configWindow = new ConfigWindow();
+            configWindow.Owner = this;
+            configWindow.ShowDialog();
+        }
+
         // Evento do botão Sair
         private void BtnSair_Click(object sender, RoutedEventArgs e)
         {
@@ -216,5 +250,11 @@ namespace ChatGPTTeste
                 Application.Current.Shutdown();
             }
         }
+
+        public void AtualizarConfiguracoes()
+        {
+            ConfigurarSegredosUsuario();         
+        }
+       
     }
 }
